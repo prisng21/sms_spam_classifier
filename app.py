@@ -3,6 +3,13 @@ import pickle
 import nltk
 from nltk.stem.porter import PorterStemmer
 
+# Render (and most non-Heroku hosts) don't auto-install NLTK data from
+# nltk.txt the way Heroku's buildpack does, so download it here instead.
+# quiet=True keeps this from spamming the Streamlit logs on every restart;
+# NLTK skips the download automatically if the data is already present.
+for _resource in ("punkt", "punkt_tab", "stopwords"):
+    nltk.download(_resource, quiet=True)
+
 ps = PorterStemmer()
 
 
